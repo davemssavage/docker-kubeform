@@ -1,0 +1,28 @@
+#!/bin/bash
+
+export TF_VAR_access_key=$AWS_ACCESS_KEY_ID
+export TF_VAR_secret_key=$AWS_SECRET_ACCESS_KEY
+
+if [ -f /state/.kubeform-ctl/kubeform-ctlrc ]; then
+  exec /state/.kubeform-ctl/kubeform-ctlrc
+fi
+
+if [ "$1" = "create" ]; then
+  cd /home/kubeform/terraform/aws/public-cloud
+  terraform apply
+elif [ "$1" = "apply" ]; then
+  cd /home/kubeform
+
+  sshArgs="-F /state/.kubeform-ctl/ssh.config -i /.kubeform-ctl/id_rsa -q"
+  kubeApiServer=$(cd /home/kubeform/terraform/aws/public-cloud && terraform output master_elb_hostname)
+
+  ansible-playbook -u core \
+    --ssh-common-args=$sshArgs \
+    --inventory-file=inventory site.yml \
+    -e kube_apiserver_vip=$kubeAPIServer
+elif [ "$1" = "destroy" ]; then
+  cd /home/kubeform/terraform/aws/public-cloud
+  terraform destroy
+else
+  echo "Usage kubeform-ctl [create|apply|destroy]"
+fi
