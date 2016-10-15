@@ -7,7 +7,7 @@ RUN	gem install json
 
 # Install Terraform
 RUN	curl -O https://releases.hashicorp.com/terraform/0.7.5/terraform_0.7.5_linux_amd64.zip
-RUN	unzip terraform_0.7.4_linux_amd64.zip -d /usr/local/bin
+RUN	unzip terraform_0.7.5_linux_amd64.zip -d /usr/local/bin
 
 # Install KubeCTL
 RUN	curl -O https://storage.googleapis.com/kubernetes-release/release/v1.3.8/bin/linux/amd64/kubectl
