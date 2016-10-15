@@ -6,7 +6,7 @@ RUN yum install -y make git curl unzip gcc libffi-devel openssl-devel ruby ruby-
 RUN	gem install json
 
 # Install Terraform
-RUN	curl -O https://releases.hashicorp.com/terraform/0.7.4/terraform_0.7.4_linux_amd64.zip
+RUN	curl -O https://releases.hashicorp.com/terraform/0.7.5/terraform_0.7.5_linux_amd64.zip
 RUN	unzip terraform_0.7.4_linux_amd64.zip -d /usr/local/bin
 
 # Install KubeCTL
